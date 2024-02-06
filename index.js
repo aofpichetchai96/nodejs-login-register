@@ -11,9 +11,10 @@ const dbUser = process.env.DB_USER;
 const dbPassword = process.env.DB_PASSWORD;
 
 // MongoDB Connection
-mongoose.connect(`mongodb+srv://${dbUser}:${dbPassword}@cluster0.7sunlh9.mongodb.net/?retryWrites=true&w=majority`,{
-    useNewUrlParser: true
-})
+mongoose.connect(`mongodb+srv://${dbUser}:${dbPassword}@cluster0.7sunlh9.mongodb.net/?retryWrites=true&w=majority`)
+// mongoose.connect(`mongodb+srv://${dbUser}:${dbPassword}@cluster0.7sunlh9.mongodb.net/?retryWrites=true&w=majority`,{
+//     useNewUrlParser: true
+// })
 
 // Contrllers
 const indexControllers = require('./controllers/indexControllers');
@@ -22,7 +23,7 @@ const registerControllers = require('./controllers/registerControllers');
 
 app.use(express.static('public'))
 app.use(express.json())
-app.use(express.urlencoded())
+app.use(express.urlencoded({ extended: true}))
 app.use(flash())
 app.set('view engine', 'ejs')
 

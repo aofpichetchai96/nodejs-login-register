@@ -23,3 +23,6 @@ UserSchema.pre('save', function(next) {
         console.log(err)
     });
 })
+
+const User = mongoose.model('User', UserSchema)
+module.exports = User
