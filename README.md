@@ -17,3 +17,9 @@ scripts": {
             "start": "nodemon index.js" 
            }
 ```
+
+
+run server
+```bash
+npm start
+```
