@@ -1,7 +1,7 @@
 # Install
 install package 
 ```bash
-npm npm init -y
+npm install
 ```
 
 run server
