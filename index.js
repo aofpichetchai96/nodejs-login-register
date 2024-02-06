@@ -4,9 +4,18 @@ const ejs = require('ejs')
 const mongoose = require('mongoose')
 const expressSession = require('express-session')
 const flash = require('connect-flash')
-const port = 4000;
 
-// Contrller 
+require('dotenv').config();
+const port = process.env.PORT_SERVER;
+const dbUser = process.env.DB_USER;
+const dbPassword = process.env.DB_PASSWORD;
+
+// MongoDB Connection
+mongoose.connect(`mongodb+srv://${dbUser}:${dbPassword}@cluster0.7sunlh9.mongodb.net/?retryWrites=true&w=majority`,{
+    useNewUrlParser: true
+})
+
+// Contrllers
 const indexControllers = require('./controllers/indexControllers');
 const loginControllers = require('./controllers/loginControllers');
 const registerControllers = require('./controllers/registerControllers');
