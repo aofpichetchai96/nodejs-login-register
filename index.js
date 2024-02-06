@@ -12,8 +12,6 @@ const dbPassword = process.env.DB_PASSWORD;
 
 // MongoDB Connection
 // mongoose.connect(`mongodb+srv://${dbUser}:${dbPassword}@cluster0.7sunlh9.mongodb.net/?retryWrites=true&w=majority`)
-
-
 mongoose.connect(`mongodb://${dbUser}:${dbPassword}@ac-pe8cnhm-shard-00-00.7sunlh9.mongodb.net:27017,ac-pe8cnhm-shard-00-01.7sunlh9.mongodb.net:27017,ac-pe8cnhm-shard-00-02.7sunlh9.mongodb.net:27017/?ssl=true&replicaSet=atlas-ju2czb-shard-0&authSource=admin&retryWrites=true&w=majority`)
 
 // Contrllers
