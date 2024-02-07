@@ -7,13 +7,20 @@ const flash = require('connect-flash')
 
 require('dotenv').config();
 const port = process.env.PORT_SERVER;
-const dbUser = process.env.DB_USER;
+
 const dbPassword = process.env.DB_PASSWORD;
+const CONNECTION_APP_CODE = process.env.CONNECTION_APP_CODE;
+const searchPassword_str = '<password>';
+const connect_MongoDB = CONNECTION_APP_CODE.replace(searchPassword_str,dbPassword);
 
 // MongoDB Connection
-// mongoose.connect(`mongodb+srv://${dbUser}:${dbPassword}@cluster0.7sunlh9.mongodb.net/?retryWrites=true&w=majority`)
-mongoose.connect(`mongodb://${dbUser}:${dbPassword}@ac-pe8cnhm-shard-00-00.7sunlh9.mongodb.net:27017,ac-pe8cnhm-shard-00-01.7sunlh9.mongodb.net:27017,ac-pe8cnhm-shard-00-02.7sunlh9.mongodb.net:27017/?ssl=true&replicaSet=atlas-ju2czb-shard-0&authSource=admin&retryWrites=true&w=majority`)
-// mongodb://admin:<password>@ac-pe8cnhm-shard-00-00.7sunlh9.mongodb.net:27017,ac-pe8cnhm-shard-00-01.7sunlh9.mongodb.net:27017,ac-pe8cnhm-shard-00-02.7sunlh9.mongodb.net:27017/?ssl=true&replicaSet=atlas-ju2czb-shard-0&authSource=admin&retryWrites=true&w=majority
+mongoose.connect(`${connect_MongoDB}`)
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', () => {
+    console.log('Connected to MongoDB Successfully');
+});
+ 
 // Contrllers
 const indexControllers = require('./controllers/indexControllers');
 const loginControllers = require('./controllers/loginControllers');
