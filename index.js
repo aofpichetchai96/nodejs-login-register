@@ -21,15 +21,21 @@ db.once('open', () => {
     console.log('Connected to MongoDB Successfully');
 });
 
-global.loggedIn = null
+// LoggedIn
+global.loggedIn = global.emailIn  = null
  
 // Contrllers
-const indexControllers = require('./controllers/indexControllers');
-const loginControllers = require('./controllers/loginControllers');
-const registerControllers = require('./controllers/registerControllers');
-const storeuserControllers = require('./controllers/storeuserControllers');
-const loginUserControllers = require('./controllers/loginUserControllers');
+const indexControllers 		= require('./controllers/indexControllers');
+const loginControllers 		= require('./controllers/loginControllers');
+const registerControllers 	= require('./controllers/registerControllers');
+const storeuserControllers 	= require('./controllers/storeuserControllers');
+const loginUserControllers 	= require('./controllers/loginUserControllers');
 const logoutUserControllers = require('./controllers/logoutUserControllers');
+const homepageControllers 	= require('./controllers/homepageControllers');
+
+// Middleware
+const redirectifAuth = require('./middleware/redirectifAuth');
+const middlewareAuth = require('./middleware/middlewareAuth');
  
 app.use(express.static('public'))
 app.use(express.json())
@@ -42,16 +48,19 @@ app.use(expressSession({
 }))
 app.use("*", (req, res, next) => {
 	loggedIn = req.session.userId	
+	emailIn = req.session.userEmail	
 	next()
 })
 app.set('view engine', 'ejs')
 
 app.get('/', indexControllers)
-app.get('/login', loginControllers)
-app.get('/register', registerControllers)
-app.post('/user/register', storeuserControllers)
-app.post('/user/login', loginUserControllers)
+app.get('/homepage', middlewareAuth,  homepageControllers)
+app.get('/login', redirectifAuth , loginControllers)
+app.get('/register', redirectifAuth  , registerControllers)
+app.post('/user/register', redirectifAuth , storeuserControllers)
+app.post('/user/login', redirectifAuth,  loginUserControllers)
 app.get('/logout', logoutUserControllers)
+
 
 app.listen(port, () => {
     console.log(`App listening on port ${port}`);

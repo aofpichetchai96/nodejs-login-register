@@ -11,7 +11,8 @@ module.exports = (req, res) => {
             let cmp = bcrypt.compare(password, user.password).then((match) => {
                 if(match){                
                     req.session.userId = user._id
-                    res.redirect('/')
+                    req.session.userEmail = user.email
+                    res.redirect('/homepage')
                 } else {
                     res.redirect('/login')
                 }
